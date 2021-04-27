@@ -17,7 +17,6 @@ class ExpensesController < ApplicationController
 
   # GET /expenses/1/edit
   def edit
-    binding.pry
   end
 
   # POST /expenses or /expenses.json
