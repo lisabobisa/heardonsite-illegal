@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_174630) do
   create_table "expenses", force: :cascade do |t|
     t.boolean "approved"
     t.bigint "budget_id", null: false
-    t.integer "cost"
+    t.integer "cost", null: false
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -43,14 +43,14 @@ ActiveRecord::Schema.define(version: 2021_04_27_174630) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.bigint "family_id", null: false
-    t.bigint "users_id", null: false
+    t.bigint "family_id"
+    t.bigint "user_id"
     t.integer "role", null: false
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["family_id"], name: "index_members_on_family_id"
-    t.index ["users_id"], name: "index_members_on_users_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -68,5 +68,5 @@ ActiveRecord::Schema.define(version: 2021_04_27_174630) do
   add_foreign_key "budgets", "members"
   add_foreign_key "expenses", "budgets"
   add_foreign_key "members", "families"
-  add_foreign_key "members", "users", column: "users_id"
+  add_foreign_key "members", "users"
 end

@@ -13,7 +13,7 @@
 
   <%= form.hidden_field :budget_id, value: params[:budget] %>
   
-  <% if Member.find_by_users_id(current_user.id).role == 'parental' %>
+  <% if Member.find_by_user_id(current_user.id).role == 'parental' %>
     <div class="field">
       <%= form.label :approved %>
       <%= form.check_box :approved %>

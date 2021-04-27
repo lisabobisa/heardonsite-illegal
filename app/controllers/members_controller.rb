@@ -23,16 +23,19 @@ class MembersController < ApplicationController
   # POST /members or /members.json
   def create
     family = Family.find(member_params[:family_id])
-
+    # @user = User.new(email: 'teddy', password: 'password', password_confirmation: 'password', member_attributes: member_params)
     @member = Member.new(member_params)
 
     respond_to do |format|
       if @member.save
+        # @member = @user.member
         format.html { redirect_to family, notice: "Member was successfully created." }
         format.json { render :show, status: :created, location: @member }
+        # send out reset password email
       else
+        binding.pry
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
+        format.json { render json: @user.member.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,6 +70,6 @@ class MembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def member_params
-      params.require(:member).permit(:family_id, :email, :name, :role)
+      params.require(:member).permit(:family_id, :email, :role, :user_id)
     end
 end

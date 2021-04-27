@@ -3,7 +3,7 @@ class BudgetsController < ApplicationController
 
   # GET /budgets or /budgets.json
   def index
-    @budgets = Budget.where(member_id: Member.find_by_users_id(current_user.id))
+    @budgets = Budget.where(member_id: Member.find_by_user_id(current_user.id))
   end
 
   # GET /budgets/1 or /budgets/1.json

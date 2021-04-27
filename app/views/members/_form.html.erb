@@ -12,10 +12,6 @@
   <% end %>
 
   <p>
-    <%= form.label :name, "Name" %>
-    <%= form.text_field :name %>
-  </p>
-  <p>
     <%= form.label :email, "Email" %>
     <%= form.text_field :email %>
   </p>
@@ -23,6 +19,7 @@
   <%= form.select :role, options_for_select(Member.roles.map {|k,v| k}) %>
 
   <%= form.hidden_field :family_id, value: @family.id %>
+  <%= form.hidden_field :user_id, value: 1 %>
 
   <div class="actions">
     <%= form.submit %>

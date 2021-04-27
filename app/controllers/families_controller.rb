@@ -3,7 +3,7 @@ class FamiliesController < ApplicationController
 
   # GET /families or /families.json
   def index
-    @families = Member.where(users_id: current_user.id).map(&:family).uniq
+    @families = Member.where(user_id: current_user.id).map(&:family).uniq
   end
 
   # GET /families/1 or /families/1.json
@@ -22,7 +22,7 @@ class FamiliesController < ApplicationController
   # POST /families or /families.json
   def create
     @family = Family.new(name: family_params[:name], 
-    members_attributes: [{users_id: current_user.id, role: 'parental', email: current_user.email}])
+    members_attributes: [{user_id: current_user.id, role: 'parental', email: current_user.email}])
 
     respond_to do |format|
       if @family.save
