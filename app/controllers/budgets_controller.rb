@@ -3,11 +3,12 @@ class BudgetsController < ApplicationController
 
   # GET /budgets or /budgets.json
   def index
-    @budgets = Budget.where()
+    @budgets = Budget.where(member_id: Member.find_by_users_id(current_user.id))
   end
 
   # GET /budgets/1 or /budgets/1.json
   def show
+    @recent_expenses = @budget.expenses.where('created_at >= ?', since_when)
   end
 
   # GET /budgets/new
@@ -66,5 +67,15 @@ class BudgetsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def budget_params
       params.require(:budget).permit(:category, :member_id, :time_frame, :days, :cap)
+    end
+
+    def since_when
+      if @budget.time_frame == 'monthly'
+        return 1.month.ago
+      elsif @budget.time_frame == 'weekly'
+        return 1.week.ago
+      elsif @budget.time_frame == 'custom'
+        return @budget.days.ago
+      end
     end
 end

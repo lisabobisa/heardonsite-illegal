@@ -17,7 +17,7 @@
 
 <p>
   <strong>Total spent so far:</strong>
-  <%= @budget.expenses.map(&:cost).inject(0){|sum,x| sum + x } %>
+  <%= @recent_expenses.map(&:cost).inject(0){|sum,x| sum + x } %>
 </p>
 
 <p>
