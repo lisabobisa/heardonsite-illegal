@@ -1,0 +1,37 @@
+<%= form_with(model: expense) do |form| %>
+  <% if expense.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(expense.errors.count, "error") %> prohibited this expense from being saved:</h2>
+
+      <ul>
+        <% expense.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :budget_id, value: params[:budget] %>
+  
+  <% if Member.find_by_users_id(current_user.id).role == 'parental' %>
+    <div class="field">
+      <%= form.label :approved %>
+      <%= form.check_box :approved %>
+    </div>
+  <% else %>
+    <%= form.hidden_field :approved, value: false %>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :cost %>
+    <%= form.number_field :cost %>
+  </div>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @family.name %> Family</h1>
+
+<% @family.members.each do |member| %>
+  <%= link_to "#{member.email}, #{member.role}", member %>
+  <br>
+<% end %>
+<br>
+
+<%= link_to '<button type="button" class="btn btn-primary">Add New Member</button>'.html_safe, new_member_path(family: @family.id) %>
+
+<br>
+<%= link_to 'Edit', edit_family_path(@family) %> |
+<%= link_to 'Back', families_path %>

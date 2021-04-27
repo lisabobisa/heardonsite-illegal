@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Family:</strong>
+  <%= @member.family.name %>
+</p>
+
+<strong>Budgets:</strong>
+<br>
+<% @member.budgets.each do |budget| %>
+  <%= link_to "#{budget.category}", budget %>
+  <br>
+<% end %>
+<br>
+
+<%= link_to '<button type="button" class="btn btn-primary">Add New Budget</button>'.html_safe, new_budget_path(family: @member.family.id, member: @member.id) %>
+
+<br>
+<%= link_to 'Edit', edit_member_path(@member) %> |
+<%= link_to 'Back', members_path %>
