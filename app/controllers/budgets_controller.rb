@@ -1,5 +1,6 @@
 class BudgetsController < ApplicationController
   before_action :set_budget, only: %i[ show edit update destroy ]
+  before_action :parents_only, only: %i[ new create edit update destroy ]
 
   # GET /budgets or /budgets.json
   def index
@@ -77,5 +78,8 @@ class BudgetsController < ApplicationController
       elsif @budget.time_frame == 'custom'
         return @budget.days.ago
       end
+    end
+
+    def parents_only
     end
 end
