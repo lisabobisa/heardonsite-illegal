@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_174630) do
     t.bigint "member_id", null: false
     t.integer "time_frame", null: false
     t.integer "days"
+    t.integer "cap", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["member_id"], name: "index_budgets_on_member_id"

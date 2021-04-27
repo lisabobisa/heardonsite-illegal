@@ -18,6 +18,10 @@
 
   <%= form.hidden_field :member_id, value: params[:member] %>
 
+  <div class="field">
+    <%= form.label :cap %>
+    <%= form.number_field :cap %>
+  </div>
 
   <div class="field">
     <%= form.label :time_frame %>
