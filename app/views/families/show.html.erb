@@ -2,10 +2,29 @@
 
 <h1><%= @family.name %> Family</h1>
 
-<% @family.members.each do |member| %>
-  <%= link_to "#{member.email}, #{member.role}", member %>
-  <br>
-<% end %>
+<table class="table">
+  <thead>
+  
+  <th>Email</th>
+  <th>Role</th>
+  <th></th>
+  <th></th>
+  <th></th>
+  </thead>
+
+  <tbody>
+    <% @family.members.each do |member| %>
+      <tr>
+        <td><%= member.email %></td>
+        <td><%= member.role %></td>
+        <td><%= link_to 'Show', member %></td>
+        <td><%= link_to 'Edit', edit_member_path(member) %></td>
+        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <br>
 
 <%= link_to '<button type="button" class="btn btn-primary">Add New Member</button>'.html_safe, new_member_path(family: @family.id) %>

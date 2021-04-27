@@ -7,7 +7,7 @@
 
 <p>
   <strong>Budget:</strong>
-  <%= @expense.budget_id %>
+  <%= link_to "#{@expense.budget.category}", @expense.budget %>
 </p>
 
 <%= link_to 'Edit', edit_expense_path(@expense) %> |
