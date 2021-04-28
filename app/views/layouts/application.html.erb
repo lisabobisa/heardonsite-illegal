@@ -15,6 +15,10 @@
 
   <body>
     <div class="container">
+      <% if user_session %>
+        <%= link_to '<button type="button" class="btn btn-outline-dark btn-sm">Sign Out</button>'.html_safe, destroy_user_session_path %>
+        <br>
+      <% end %>
       <%= yield %>
     </div>
   </body>

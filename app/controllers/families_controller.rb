@@ -3,7 +3,12 @@ class FamiliesController < ApplicationController
 
   # GET /families or /families.json
   def index
-    @families = Member.where(user_id: current_user.id).map(&:family).uniq
+    family = Member.find_by(user_id: current_user.id)&.family
+    if family
+      redirect_to family
+    else
+      redirect_to new_family_path
+    end
   end
 
   # GET /families/1 or /families/1.json
@@ -21,8 +26,7 @@ class FamiliesController < ApplicationController
 
   # POST /families or /families.json
   def create
-    @family = Family.new(name: family_params[:name], 
-    members_attributes: [{user_id: current_user.id, role: 'parental', email: current_user.email}])
+    @family = Family.new(name: family_params[:name], members_attributes: [{user: current_user, role: 'parental'}])
 
     respond_to do |format|
       if @family.save

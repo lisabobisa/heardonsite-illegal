@@ -1,22 +1,49 @@
 <p id="notice"><%= notice %></p>
 
+<h2><%= @member.user.name %></h2>
 <p>
-  <strong>Family:</strong>
-  <%= @member.family.name %>
+  <strong>Family:</strong> <%= @member.family.name %>
 </p>
-
-<strong>Budgets:</strong>
+<p>
+  <strong>Email:</strong> <%= @member.user.email %>
+</p>
+<p>
+  <strong>Role:</strong> <%= @member.role %>
+</p>
 <br>
-<% @member.budgets.each do |budget| %>
-  <%= link_to "#{budget.category}", budget %>
-  <br>
+<table class="table">
+  <thead>
+  
+  <th>Category</th>
+  <th>Budgeted</th>
+  <th>Time Frame</th>
+  <th>Progress</th>
+  <th></th>
+  <th></th>
+  <th></th>
+  </thead>
+
+  <tbody>
+    <% @member.budgets.each do |budget| %>
+      <tr>
+        <td><%= budget.category %></td>
+        <td><%= budget.cap %></td>
+        <td><%= budget.time_frame %></td>
+        <td><%= link_to 'Show', budget %></td>
+        <td><%= link_to 'Edit', edit_budget_path(budget) %></td>
+        <td><%= link_to 'Destroy', budget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if @member.budgets.empty? %> 
+  No budgets for this member
 <% end %>
 <br>
-
-<% if Member.find_by_user_id(current_user.id).role == 'parental' %>
-  <%= link_to '<button type="button" class="btn btn-primary">Add New Budget</button>'.html_safe, new_budget_path(family: @member.family.id, member: @member.id) %>
+<br>
+<% if @member.role == 'parental' %>
+  <%= link_to 'Add New Budget', new_budget_path(family: @member.family.id, member: @member.id) %>
 <% end %>
 
 <br>
-<%= link_to 'Edit', edit_member_path(@member) %> |
 <%= link_to 'Back', family_path(@member.family_id) %>

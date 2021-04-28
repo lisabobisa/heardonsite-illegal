@@ -1,9 +1,0 @@
-<h2>Expense Tracking!</h2>
-
-<br>
-
-<%= link_to '<button type="button" class="btn btn-primary">Create New Family</button>'.html_safe, new_family_path %>
-
-<% Family.all.each do |family| %>
-  <%= link_to family %>
-<% end %>

@@ -52,7 +52,7 @@
 </tbody>
 </table>
 <br>
-<%= link_to '<button type="button" class="btn btn-primary">Add New Expense</button>'.html_safe, new_expense_path(budget: @budget.id) %>
+<%= link_to 'Add New Expense', new_expense_path(budget: @budget.id) %>
 
 <br>
 <%= link_to 'Edit', edit_budget_path(@budget) %> |
