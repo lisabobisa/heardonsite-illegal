@@ -27,9 +27,9 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        @user.send_reset_password_instructions
+        # @user.send_reset_password_instructions
         @member = @user.member
-        format.html { redirect_to family, notice: "Member was successfully created." }
+        format.html { redirect_to family, notice: "Member was successfully created with email #{@user.email} and password 'password'." }
         format.json { render :show, status: :created, location: @member }
         # send out reset password email
       else
