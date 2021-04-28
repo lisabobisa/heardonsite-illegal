@@ -1,15 +1,18 @@
 class BudgetsController < ApplicationController
   before_action :set_budget, only: %i[ show edit update destroy ]
-  before_action :parents_only, only: %i[ new create edit update destroy ]
+  before_action :adult_swim, only: %i[ new create edit update destroy ]
 
   # GET /budgets or /budgets.json
   def index
-    @budgets = Budget.where(member_id: Member.find_by_user_id(current_user.id))
+    if current_user.is_a_parent?
+      @budgets = current_user.member.family.budgets
+    else
+      @budgets = current_user.member.budgets
+    end
   end
 
   # GET /budgets/1 or /budgets/1.json
   def show
-    @recent_expenses = @budget.expenses.where('created_at >= ?', since_when)
   end
 
   # GET /budgets/new
@@ -68,18 +71,5 @@ class BudgetsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def budget_params
       params.require(:budget).permit(:category, :member_id, :time_frame, :days, :cap)
-    end
-
-    def since_when
-      if @budget.time_frame == 'monthly'
-        return 1.month.ago
-      elsif @budget.time_frame == 'weekly'
-        return 1.week.ago
-      elsif @budget.time_frame == 'custom'
-        return @budget.days.ago
-      end
-    end
-
-    def parents_only
     end
 end

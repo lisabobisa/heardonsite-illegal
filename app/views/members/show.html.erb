@@ -11,13 +11,17 @@
   <strong>Role:</strong> <%= @member.role %>
 </p>
 <br>
+
+<% if current_user.is_a_parent? || @member == current_user.member %>
 <table class="table">
   <thead>
   
   <th>Category</th>
   <th>Budgeted</th>
   <th>Time Frame</th>
+  <th>Amount Spent</th>
   <th>Progress</th>
+  <th></th>
   <th></th>
   <th></th>
   <th></th>
@@ -27,11 +31,15 @@
     <% @member.budgets.each do |budget| %>
       <tr>
         <td><%= budget.category %></td>
-        <td><%= budget.cap %></td>
-        <td><%= budget.time_frame %></td>
+        <td>$ <%= budget.cap %></td>
+        <td><%= budget.time_frame_display %></td>
+        <td>$ <%= budget.spent %></td>
+        <td><%= budget.progress %></td>
         <td><%= link_to 'Show', budget %></td>
+        <% if current_user.is_a_parent? %>
         <td><%= link_to 'Edit', edit_budget_path(budget) %></td>
         <td><%= link_to 'Destroy', budget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -41,9 +49,9 @@
 <% end %>
 <br>
 <br>
-<% if @member.role == 'parental' %>
+<% if current_user.is_a_parent? %>
   <%= link_to 'Add New Budget', new_budget_path(family: @member.family.id, member: @member.id) %>
 <% end %>
-
+<% end %>
 <br>
 <%= link_to 'Back', family_path(@member.family_id) %>

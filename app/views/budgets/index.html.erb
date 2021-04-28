@@ -7,6 +7,9 @@
     <tr>
       <th scope="col">Category</th>
       <th scope="col">Member</th>
+      <th scope="col">Cap</th>
+      <th scope="col">Spent</th>
+      <th scope="col">Progress</th>
       <th scope="col">Time frame</th>
       <th scope="col">Days</th>
       <th scope="col" colspan="3"></th>
@@ -17,9 +20,11 @@
     <% @budgets.each do |budget| %>
       <tr>
         <td><%= budget.category %></td>
-        <td><%= budget.member_id %></td>
-        <td><%= budget.time_frame %></td>
-        <td><%= budget.days %></td>
+        <td><%= budget.member.user.name %></td>
+        <td>$ <%= budget.cap %></td>
+        <td>$ <%= budget.spent %></td>
+        <td><%= budget.progress %></td>
+        <td><%= budget.time_frame_display %></td>
         <td><%= link_to 'Show', budget %></td>
         <td><%= link_to 'Edit', edit_budget_path(budget) %></td>
         <td><%= link_to 'Destroy', budget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -30,4 +35,4 @@
 
 <br>
 
-<%= link_to 'New Budget', new_budget_path %>
+<%= link_to 'Back', family_path(current_user.member.family) %>

@@ -7,34 +7,37 @@
 
 <p>
   <strong>Member:</strong>
-  <%= @budget.member_id %>
+  <%= @budget.member.user.name %>
 </p>
 
 <p>
   <strong>Cap:</strong>
-  <%= @budget.cap %>
+  $ <%= @budget.cap %>
 </p>
 
 <p>
   <strong>Total spent so far:</strong>
-  <%= @recent_expenses.map(&:cost).inject(0){|sum,x| sum + x } %>
+  $ <%= @budget.spent %>
+</p>
+
+<p>
+  <strong>Progress:</strong>
+  <%= @budget.progress %>
 </p>
 
 <p>
   <strong>Time frame:</strong>
-  <%= @budget.time_frame %>
+  <%= @budget.time_frame_display %>
 </p>
 
-<p>
-  <strong>Days:</strong>
-  <%= @budget.days %>
-</p>
 <br>
 
+<h4>Expenses</h4>
 <table class="table">
 <tr>
 <th scope="col">Name</th>
 <th scope="col">Cost</th>
+<th scope="col">Approved?</th>
 <th scope="col"></th>
 <th scope="col"></th>
 <th scope="col"></th>
@@ -44,6 +47,7 @@
   <tr>
     <td><%= expense.name %></td>
     <td><%= expense.cost %></td>
+    <td><%= expense.approved ? 'Yes' : 'No' %></td>
     <td><%= link_to 'Show', expense %></td>
     <td><%= link_to 'Edit', edit_expense_path(expense) %></td>
     <td><%= link_to 'Destroy', expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -52,8 +56,8 @@
 </tbody>
 </table>
 <br>
-<%= link_to 'Add New Expense', new_expense_path(budget: @budget.id) %>
-
-<br>
+<%= link_to 'Add New Expense', new_expense_path(budget: @budget.id) %> |
+<% if current_user.is_a_parent? %>
 <%= link_to 'Edit', edit_budget_path(@budget) %> |
-<%= link_to 'Back', budgets_path %>
+<% end %>
+<%= link_to 'Back', @budget.member %>

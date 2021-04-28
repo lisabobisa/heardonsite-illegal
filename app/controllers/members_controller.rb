@@ -15,10 +15,15 @@ class MembersController < ApplicationController
     family = Family.find(member_params[:family_id])
 
     raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
-    @user = User.new({email: member_params[:email], password: 'password', password_confirmation: 'password', name: member_params[:name], member_attributes: member_params})
+    @user = User.new({
+      email: member_params[:email],
+      password: 'password',
+      password_confirmation: 'password',
+      name: member_params[:name],
+      member_attributes: {role: member_params[:role], family: family}
+    })
     @user.reset_password_token = hashed
     @user.reset_password_sent_at = Time.now.utc
-    @user.save
 
     respond_to do |format|
       if @user.save

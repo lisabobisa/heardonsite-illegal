@@ -9,6 +9,6 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :member
 
   def is_a_parent?
-    Member.find_by_user_id(id)&.role == 'parental'
+    member&.role == 'parental'
   end
 end

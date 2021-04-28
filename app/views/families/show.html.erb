@@ -23,6 +23,10 @@
 
 <br>
 
-<%= link_to 'Add New Member', new_member_path(family: @family.id) %> | 
+<% if current_user.is_a_parent? %>
+<%= link_to 'Add New Member', new_member_path %> | 
 
-<%= link_to 'Edit Family', edit_family_path(@family) %>
+<%= link_to 'Edit Family', edit_family_path(@family) %> |
+
+<%= link_to 'View All Budgets', budgets_path %>
+<% end %>

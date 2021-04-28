@@ -25,7 +25,7 @@ class ExpensesController < ApplicationController
 
     respond_to do |format|
       if @expense.save
-        format.html { redirect_to @expense, notice: "Expense was successfully created." }
+        format.html { redirect_to @expense.budget, notice: "Expense was successfully created." }
         format.json { render :show, status: :created, location: @expense }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,8 +37,8 @@ class ExpensesController < ApplicationController
   # PATCH/PUT /expenses/1 or /expenses/1.json
   def update
     respond_to do |format|
-      if @expense.update(expense_params)
-        format.html { redirect_to @expense, notice: "Expense was successfully updated." }
+      if @expense.update(expense_params.merge(budget: @expense.budget))
+        format.html { redirect_to @expense.budget, notice: "Expense was successfully updated." }
         format.json { render :show, status: :ok, location: @expense }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,9 +49,10 @@ class ExpensesController < ApplicationController
 
   # DELETE /expenses/1 or /expenses/1.json
   def destroy
+    budget = @expense.budget
     @expense.destroy
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Expense was successfully destroyed." }
+      format.html { redirect_to budget, notice: "Expense was successfully destroyed." }
       format.json { head :no_content }
     end
   end

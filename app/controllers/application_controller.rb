@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     root_path
   end
 
+  def adult_swim
+    redirect_to root_path unless current_user.is_a_parent?
+  end
+
   protected
 
   def configure_permitted_parameters

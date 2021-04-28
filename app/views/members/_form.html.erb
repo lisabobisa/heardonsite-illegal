@@ -12,8 +12,22 @@
     </div>
   <% end %>
 
-  <%= form.select :role, options_for_select(Member.roles.map {|k,v| k}) %>
-  <%= form.hidden_field :family_id, value: params[:family] || @member.family.id %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :role %>
+    <%= form.select :role, options_for_select(Member.roles.map(&:first)) %>
+  </div>
+
+  <%= form.hidden_field :family_id, value: current_user.member.family.id %>
   <%= form.hidden_field :user_id, value: 1 %>
 
   <div class="actions">
